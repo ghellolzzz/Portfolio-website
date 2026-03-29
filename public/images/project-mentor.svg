@@ -1,0 +1,19 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" rx="36" fill="#090D18"/>
+  <rect x="48" y="48" width="1104" height="664" rx="28" fill="#101726"/>
+  <rect x="90" y="98" width="320" height="564" rx="28" fill="#131F33"/>
+  <rect x="448" y="98" width="614" height="248" rx="28" fill="#111E31"/>
+  <rect x="448" y="382" width="614" height="280" rx="28" fill="#111E31"/>
+  <circle cx="250" cy="220" r="86" fill="#1E3A63"/>
+  <circle cx="250" cy="220" r="52" fill="#86E7FF" fill-opacity="0.65"/>
+  <rect x="154" y="340" width="192" height="18" rx="9" fill="#D9FBFF"/>
+  <rect x="126" y="382" width="248" height="12" rx="6" fill="#D9FBFF" fill-opacity="0.5"/>
+  <rect x="126" y="430" width="248" height="78" rx="18" fill="#1A3256"/>
+  <rect x="126" y="530" width="248" height="78" rx="18" fill="#17314E"/>
+  <rect x="492" y="140" width="180" height="16" rx="8" fill="#93F3FF"/>
+  <rect x="492" y="178" width="238" height="12" rx="6" fill="#D8FAFF" fill-opacity="0.55"/>
+  <rect x="492" y="224" width="526" height="76" rx="18" fill="#163252"/>
+  <rect x="492" y="426" width="204" height="16" rx="8" fill="#93F3FF"/>
+  <rect x="492" y="470" width="526" height="134" rx="22" fill="#17365B"/>
+  <text x="600" y="706" text-anchor="middle" fill="#D9FBFF" font-family="Arial, sans-serif" font-size="28" letter-spacing="3">MENTOR MATCH PLATFORM</text>
+</svg>
