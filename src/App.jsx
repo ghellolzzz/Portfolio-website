@@ -12,6 +12,26 @@ function SectionIntro({ eyebrow, title, copy }) {
   )
 }
 
+function parseTimelineOrganization(organization) {
+  const match = organization.match(/^(.*?)\s*\((.*?)\)$/)
+
+  if (!match) {
+    return {
+      name: organization,
+      meta: '',
+    }
+  }
+
+  return {
+    name: match[1],
+    meta: match[2],
+  }
+}
+
+function isCurrentTimelineEntry(date) {
+  return /present/i.test(date)
+}
+
 function Icon({ name, className = 'h-5 w-5' }) {
   const icons = {
     menu: (
@@ -763,40 +783,64 @@ function App() {
               <SectionIntro
                 eyebrow="Journey"
                 title="My experiences along the way"
-              
+                copy="A timeline of internships, leadership involvement, and hands-on roles that shaped how I build, collaborate, and grow."
               />
             </Reveal>
 
-            <div className="relative mt-10 space-y-6 before:absolute before:top-0 before:bottom-0 before:left-4 before:w-px before:bg-gradient-to-b before:from-cyan-300/40 before:via-white/12 before:to-transparent sm:before:left-1/2 sm:before:-translate-x-1/2">
-              {timeline.map((entry, index) => (
-                <Reveal
-                  variant={index % 2 === 0 ? 'left' : 'right'}
-                  key={`${entry.date}-${entry.title}`}
-                  delay={index * 100}
-                  className="relative"
-                >
-                  <div
-                    className={`sm:grid sm:grid-cols-2 sm:gap-8 ${
-                      index % 2 === 1 ? 'sm:[&>*:first-child]:order-2' : ''
-                    }`}
+            <div className="journey-timeline mt-10">
+              {timeline.map((entry, index) => {
+                const organization = parseTimelineOrganization(entry.organization)
+                const isCurrent = isCurrentTimelineEntry(entry.date)
+
+                return (
+                  <Reveal
+                    variant="up"
+                    key={`${entry.date}-${entry.title}`}
+                    delay={index * 100}
+                    className="journey-row"
                   >
-                    <div className="hidden sm:block" />
-                    <div className="relative pl-12 sm:pl-0">
-                      <span className="absolute left-1 top-8 h-6 w-6 rounded-full border border-cyan-300/30 bg-[#050816] shadow-[0_0_0_8px_rgba(5,8,22,1)] sm:left-1/2 sm:-translate-x-1/2" />
-                      <div className="panel p-6 sm:p-7">
+                    <div className="journey-date hidden md:flex">
+                      <span className="journey-date-pill">{entry.date}</span>
+                      <span className="journey-step">{String(index + 1).padStart(2, '0')}</span>
+                    </div>
+
+                    <div className="journey-spine">
+                      <span className="timeline-dot" />
+                    </div>
+
+                    <div className="journey-card panel interactive-lift p-6 sm:p-7">
+                      <div className="flex items-start justify-between gap-3 md:hidden">
                         <p className="text-xs uppercase tracking-[0.24em] text-cyan-100/75">
                           {entry.date}
                         </p>
-                        <h3 className="mt-3 text-xl font-semibold text-white">{entry.title}</h3>
-                        <p className="mt-2 text-sm text-stone-400">{entry.organization}</p>
-                        <p className="mt-4 text-sm leading-7 text-stone-300">
-                          {entry.description}
+                        {isCurrent ? <span className="journey-status-pill">Current</span> : null}
+                      </div>
+
+                      <div className="mt-1 md:mt-0">
+                        <h3 className="text-xl font-semibold text-white sm:text-[1.7rem] sm:leading-tight">
+                          {entry.title}
+                        </h3>
+                        <p className="mt-3 text-sm font-medium text-stone-300 sm:text-[0.98rem]">
+                          {organization.name}
                         </p>
                       </div>
+
+                      <div className="mt-4 flex flex-wrap items-center gap-2.5">
+                        {organization.meta ? (
+                          <span className="journey-meta-pill">{organization.meta}</span>
+                        ) : null}
+                        {isCurrent ? (
+                          <span className="hidden md:inline-flex journey-status-pill">Current</span>
+                        ) : null}
+                      </div>
+
+                      <p className="mt-5 text-sm leading-7 text-stone-300 sm:text-[0.98rem]">
+                        {entry.description}
+                      </p>
                     </div>
-                  </div>
-                </Reveal>
-              ))}
+                  </Reveal>
+                )
+              })}
             </div>
           </div>
         </section>

@@ -241,6 +241,33 @@ export const portfolioData = {
         },
       ],
     },
+    {
+      title: 'Overseas Study Trip To HCMC',
+      role: ' Participant',
+      period: 'Dec 2025',
+      description:
+        'Participated in an overseas study trip to Ho Chi Minh City, engaging in industry visits, workshops, and cultural exchanges with both business and computing students.',
+      gallery: [
+        {
+          src: '/images/activities/Independant -palace.jpeg',
+          alt: 'Short accessibility text',
+          caption: 'Group photo at Independant palace',
+          date: 'Dec 2025',
+        },
+         {
+          src: '/images/activities/Van-Lang.jpeg',
+          alt: 'Short accessibility text',
+          caption: 'Group photo at Van Lang University',
+          date: 'Dec 2025',
+        },
+        {
+          src: '/images/activities/AI-workshop.jpeg',
+          alt: 'Short accessibility text',
+          caption: 'AI workshop with Mr Mic Nguyen',
+          date: 'Dec 2025',
+        },
+      ],
+    },
   ],
   contacts: [
     { label: 'Email', value: 'mgf_21@icloud.com', url: 'mailto:mgf_21@icloud.com' },
