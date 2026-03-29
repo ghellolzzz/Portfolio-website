@@ -221,8 +221,8 @@ export const portfolioData = {
         {
           src: '/images/activities/Halloween.jpeg',
           alt: 'Short accessibility text',
-          caption: 'Singapore Poly OpenHouse 2026',
-          date: 'Jan 2026',
+          caption: 'Group photo with other halloween scarers',
+          date: 'Sept 2024',
         },
       ],
     },
