@@ -8,7 +8,7 @@ export const portfolioData = {
       'I am a software-focused student and builder who enjoys turning ideas into responsive, production-ready web applications. I have hands-on experience building full-stack systems with secure backend architecture, clean APIs, and intuitive frontends.',
     location: 'Based in Singapore',
     availability:
-      'Actively seeking internships and oppurtunities to contribute, learn, and grow in real-world development teams',
+      'Actively seeking internships and opportunities to contribute, learn, and grow in real-world development teams',
     profileImage: '/images/profile.jpeg',
     resumeUrl: '/resume.pdf',
   },
@@ -39,7 +39,7 @@ export const portfolioData = {
     },
     {
       category: 'Database & Cloud',
-      items: ['Supabase', 'MySQL', 'PostgreSQL', 'neonDb', 'Render deploment'],
+      items: ['Supabase', 'MySQL', 'PostgreSQL', 'NeonDB', 'Render deployment'],
     },
     {
       category: 'Tools',
@@ -52,9 +52,9 @@ export const portfolioData = {
   ],
   projects: [
     {
-      title: 'Fitness Challenge Game Comvined with Pet Elements',
+      title: 'Fitness Challenge Game Combined with Pet Elements',
       summary:
-        'As part of my Backend development module project, I decided to build a fitess challenge game where users can earn points through completing challenges and adopting pets',
+        'As part of my Backend Development module project, I built a fitness challenge game where users can earn points by completing challenges and adopting pets.',
       impact:
         'Make users stay fit by getting motivated through engaging them with pets',
       stack: ['Javascript', 'HTML', 'CSS', 'Node.js', 'Express', 'MYSQL'],
@@ -68,9 +68,9 @@ export const portfolioData = {
     {
       title: 'GreenLoop x E-COLLECT(Hackathon Project)',
       summary:
-        'As part of SPs Sustainability Hackathon, we were tasked to tackle sustainability challenges in the campus. As such, we built a prototype for a QR-based reusable container that is combined with gamified features. It allows users to colect gacha rewards through collecting and unboxing blindboxes',
+        'As part of SP Sustainability Hackathon, we were tasked to tackle sustainability challenges on campus. We built a prototype for a QR-based reusable container system combined with gamified features, allowing users to collect gacha rewards through collecting and unboxing blind boxes.',
       impact:
-        'Encourage recyling behavior and making SP campus more sustainable',
+        'Encourage recycling behavior and make SP campus more sustainable',
       stack: ['React', 'Tailwind CSS'],
       image: '/images/Sp-sustainability.jpg',
       links: [
@@ -123,7 +123,7 @@ export const portfolioData = {
       title: 'Food Server',
       organization: 'Pan Pacific Singapore (Part-time, On-site)',
       description:
-        'Was attached for awhile to gain some working world experience. Had the privilege to coordinate with other while ensuring customer requests are met. ',
+        'Gained customer-facing work experience by coordinating with team members and ensuring guest requests were handled professionally.',
     },
   ],
   activities: [
@@ -143,7 +143,7 @@ export const portfolioData = {
         {
           src: '/images/activities/Asean-Sparks.jpeg',
           alt: 'International Student Club welfare planning session',
-          caption: 'OGL of group 10 for ASEAN Sparks Hackathon collabroated with Ngee Ann Poly (2025)',
+          caption: 'OGL of group 10 for ASEAN Sparks Hackathon in collaboration with Ngee Ann Poly (2025)',
         },
         {
           src: '/images/activities/CNY-Event.jpeg',
@@ -206,7 +206,7 @@ export const portfolioData = {
         {
           src: '/images/activities/Open-House.jpeg',
           alt: 'Short accessibility text',
-          caption: 'Singapore Poly OpenHouse 2026',
+          caption: 'Singapore Poly Open House 2026',
           date: 'Jan 2026',
         },
       ],
@@ -216,7 +216,7 @@ export const portfolioData = {
       role: 'Scarer',
       period: 'Sept 2024',
       description:
-        'Participated as a scarer in SPs annual highly anticipated halloween event, contributing to an immersive spooky experience for students and guests. ',
+        'Participated as a scarer in SP annual Halloween event, contributing to an immersive experience for students and guests.',
       gallery: [
         {
           src: '/images/activities/Halloween.jpeg',

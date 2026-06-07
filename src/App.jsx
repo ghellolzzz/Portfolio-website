@@ -5,9 +5,11 @@ import { portfolioData } from './data/portfolio'
 function SectionIntro({ eyebrow, title, copy }) {
   return (
     <div className="max-w-2xl">
-      <span className="label-pill">{eyebrow}</span>
+      <div className="section-rule">
+        <span className="label-pill">{eyebrow}</span>
+      </div>
       <h2 className="section-title mt-6">{title}</h2>
-      <p className="section-copy mt-5">{copy}</p>
+      {copy ? <p className="section-copy mt-5">{copy}</p> : null}
     </div>
   )
 }
@@ -158,7 +160,7 @@ function LinkButton({ href, icon, children, secondary = false }) {
     'cta-button inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition duration-300'
   const variantClass = secondary
     ? 'cta-button-secondary border border-white/12 bg-white/6 text-stone-200 hover:border-white/25 hover:bg-white/10'
-    : 'cta-button-primary border border-cyan-300/30 bg-cyan-300/14 text-cyan-50 hover:border-cyan-200/50 hover:bg-cyan-300/20'
+    : 'cta-button-primary border border-teal-300/30 bg-teal-300/14 text-teal-50 hover:border-teal-200/50 hover:bg-teal-300/20'
 
   return (
     <a
@@ -219,7 +221,7 @@ function ActivityCard({ activity, isOpen, onToggle, onImageOpen }) {
     <div className="panel interactive-lift p-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-xs uppercase tracking-[0.24em] text-cyan-100/75">{activity.role}</p>
+          <p className="text-xs uppercase tracking-[0.18em] text-teal-100/75">{activity.role}</p>
           <h3 className="mt-3 text-xl font-semibold text-white">{activity.title}</h3>
           <p className="mt-2 text-sm text-stone-400">
             {activity.organization} {activity.period ? `| ${activity.period}` : ''}
@@ -229,7 +231,7 @@ function ActivityCard({ activity, isOpen, onToggle, onImageOpen }) {
         <button
           type="button"
           onClick={onToggle}
-          className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/6 px-4 py-2 text-xs font-medium uppercase tracking-[0.18em] text-cyan-100 transition hover:border-cyan-300/35 hover:bg-cyan-300/12"
+          className="inline-flex items-center gap-2 rounded-md border border-white/12 bg-white/6 px-4 py-2 text-xs font-medium uppercase tracking-[0.18em] text-teal-100 transition hover:border-teal-300/35 hover:bg-teal-300/12"
           aria-expanded={isOpen}
         >
           {isOpen ? 'Collapse' : 'Expand'}
@@ -248,7 +250,7 @@ function ActivityCard({ activity, isOpen, onToggle, onImageOpen }) {
             <ul className="mt-5 space-y-2.5">
               {highlights.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm leading-7 text-stone-300">
-                  <span className="mt-2 h-2 w-2 rounded-full bg-cyan-300" />
+                  <span className="mt-2 h-2 w-2 rounded-full bg-teal-300" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -260,7 +262,7 @@ function ActivityCard({ activity, isOpen, onToggle, onImageOpen }) {
               {gallery.map((image) => (
                 <figure
                   key={`${image.src}-${image.caption}`}
-                  className="activity-photo overflow-hidden rounded-2xl border border-white/10 bg-black/20"
+                  className="activity-photo overflow-hidden rounded-lg border border-white/10 bg-black/20"
                 >
                   <button
                     type="button"
@@ -272,18 +274,18 @@ function ActivityCard({ activity, isOpen, onToggle, onImageOpen }) {
                       <img
                         src={image.src}
                         alt={image.alt}
-                        className="h-44 w-full rounded-xl object-contain transition duration-300 group-hover:scale-[1.015]"
+                        className="h-44 w-full rounded-md object-contain transition duration-300 group-hover:scale-[1.015]"
                       />
                     </div>
                   </button>
                   <figcaption className="border-t border-white/10 px-4 py-3 text-xs tracking-[0.05em] text-stone-300">
                     <p>{image.caption}</p>
                     {image.date && (
-                      <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-cyan-100/75">
+                      <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-teal-100/75">
                         {image.date}
                       </p>
                     )}
-                    <p className="mt-2 text-[10px] uppercase tracking-[0.18em] text-cyan-100/70">
+                    <p className="mt-2 text-[10px] uppercase tracking-[0.18em] text-teal-100/70">
                       Click image to view full photo
                     </p>
                   </figcaption>
@@ -304,7 +306,7 @@ function OtherActivityCard({ item, isOpen, onToggle, onImageOpen }) {
     <div className="panel interactive-lift p-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-xs uppercase tracking-[0.24em] text-cyan-100/75">{item.role}</p>
+          <p className="text-xs uppercase tracking-[0.18em] text-teal-100/75">{item.role}</p>
           <h3 className="mt-3 text-xl font-semibold text-white">{item.title}</h3>
           <p className="mt-2 text-sm text-stone-400">{item.period}</p>
         </div>
@@ -312,7 +314,7 @@ function OtherActivityCard({ item, isOpen, onToggle, onImageOpen }) {
         <button
           type="button"
           onClick={onToggle}
-          className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/6 px-4 py-2 text-xs font-medium uppercase tracking-[0.18em] text-cyan-100 transition hover:border-cyan-300/35 hover:bg-cyan-300/12"
+          className="inline-flex items-center gap-2 rounded-md border border-white/12 bg-white/6 px-4 py-2 text-xs font-medium uppercase tracking-[0.18em] text-teal-100 transition hover:border-teal-300/35 hover:bg-teal-300/12"
           aria-expanded={isOpen}
         >
           {isOpen ? 'Hide Gallery' : 'Open Gallery'}
@@ -332,7 +334,7 @@ function OtherActivityCard({ item, isOpen, onToggle, onImageOpen }) {
               {gallery.map((image) => (
                 <figure
                   key={`${image.src}-${image.caption}`}
-                  className="activity-photo overflow-hidden rounded-2xl border border-white/10 bg-black/20"
+                  className="activity-photo overflow-hidden rounded-lg border border-white/10 bg-black/20"
                 >
                   <button
                     type="button"
@@ -344,18 +346,18 @@ function OtherActivityCard({ item, isOpen, onToggle, onImageOpen }) {
                       <img
                         src={image.src}
                         alt={image.alt}
-                        className="h-44 w-full rounded-xl object-contain transition duration-300 group-hover:scale-[1.015]"
+                        className="h-44 w-full rounded-md object-contain transition duration-300 group-hover:scale-[1.015]"
                       />
                     </div>
                   </button>
                   <figcaption className="border-t border-white/10 px-4 py-3 text-xs tracking-[0.04em] text-stone-300">
                     <p>{image.caption}</p>
                     {image.date && (
-                      <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-cyan-100/75">
+                      <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-teal-100/75">
                         {image.date}
                       </p>
                     )}
-                    <p className="mt-2 text-[10px] uppercase tracking-[0.18em] text-cyan-100/70">
+                    <p className="mt-2 text-[10px] uppercase tracking-[0.18em] text-teal-100/70">
                       Click image to view full photo
                     </p>
                   </figcaption>
@@ -365,7 +367,7 @@ function OtherActivityCard({ item, isOpen, onToggle, onImageOpen }) {
           )}
 
           {!gallery.length && (
-            <div className="gallery-empty mt-5 rounded-2xl border border-dashed border-white/20 bg-black/15 px-4 py-5 text-sm leading-7 text-stone-300">
+            <div className="gallery-empty mt-5 rounded-lg border border-dashed border-white/20 bg-black/15 px-4 py-5 text-sm leading-7 text-stone-300">
               No gallery photos added yet. Add image items under `otherActivities[].gallery` in
               `src/data/portfolio.js`.
             </div>
@@ -431,32 +433,21 @@ function App() {
 
   return (
     <div className={`relative overflow-x-hidden bg-transparent ${theme === 'light' ? 'theme-light text-slate-900' : 'text-stone-100'}`}>
-      <div
-        className={`pointer-events-none absolute inset-x-0 top-0 -z-10 h-[32rem] ${
-          theme === 'light'
-            ? 'bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.16),transparent_32%),radial-gradient(circle_at_15%_20%,rgba(14,165,233,0.14),transparent_18%)]'
-            : 'bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.22),transparent_32%),radial-gradient(circle_at_15%_20%,rgba(59,130,246,0.18),transparent_18%)]'
-        }`}
-      />
-      <div
-        className={`pointer-events-none absolute inset-x-0 top-[32rem] -z-10 h-[48rem] ${
-          theme === 'light'
-            ? 'bg-[radial-gradient(circle_at_85%_20%,rgba(56,189,248,0.14),transparent_20%),linear-gradient(180deg,rgba(241,245,249,0)_0%,rgba(241,245,249,0.78)_50%,rgba(241,245,249,0)_100%)]'
-            : 'bg-[radial-gradient(circle_at_85%_20%,rgba(34,211,238,0.12),transparent_20%),linear-gradient(180deg,rgba(9,9,11,0)_0%,rgba(9,9,11,0.7)_50%,rgba(9,9,11,0)_100%)]'
-        }`}
-      />
+      <div className="site-noise pointer-events-none fixed inset-0 -z-10 opacity-30" />
+      <div className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-screen bg-[linear-gradient(115deg,rgba(20,184,166,0.12),transparent_30%,rgba(245,158,11,0.08)_68%,transparent)]" />
 
       <header
         className={`sticky top-0 z-40 border-b backdrop-blur-xl ${
-          theme === 'light' ? 'border-slate-900/12 bg-slate-100/82' : 'border-white/8 bg-[#050816]/80'
+          theme === 'light' ? 'border-slate-900/12 bg-slate-100/86' : 'border-white/8 bg-[#05060a]/84'
         }`}
       >
         <div className="section-shell flex items-center justify-between py-4">
           <a
             href="#home"
-            className="text-sm font-semibold uppercase tracking-[0.28em] text-white"
+            className="group inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.18em] text-white"
           >
-            {profile.name}
+            <span className="profile-stamp h-10 rounded-lg text-xs">MG</span>
+            <span className="hidden sm:inline">{profile.name}</span>
           </a>
 
           <nav className="hidden items-center gap-6 md:flex">
@@ -501,7 +492,7 @@ function App() {
                 <a
                   key={item.href}
                   href={item.href}
-                  className="rounded-2xl border border-white/8 bg-white/5 px-4 py-3 text-sm text-stone-200 transition hover:bg-white/8"
+                  className="rounded-lg border border-white/8 bg-white/5 px-4 py-3 text-sm text-stone-200 transition hover:bg-white/8"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.label}
@@ -513,33 +504,15 @@ function App() {
       </header>
 
       <main>
-        <section id="home" className="scroll-mt-24">
-          <div className="section-shell py-16 sm:py-20 lg:py-24">
-            <div className="grid items-center gap-10 lg:grid-cols-[1.18fr_0.82fr]">
-              <Reveal variant="left" className="space-y-8">
-                <span className="label-pill">
-                  <Icon name="spark" className="h-4 w-4" />
-                  Welcome to my Portfolio
-                </span>
-
-                <div className="space-y-5">
-                  <p className="text-sm uppercase tracking-[0.28em] text-cyan-100/85">
-                    {profile.title}
-                  </p>
-                  <h1
-                    className="max-w-3xl text-4xl font-semibold leading-tight tracking-[-0.06em] text-white sm:text-5xl lg:text-7xl"
-                    aria-label={profile.tagline}
-                  >
-                    <TypewriterTagline
-                      key={profile.tagline}
-                      text={profile.tagline}
-                      animate
-                    />
-                  </h1>
-                  <p className="max-w-2xl text-base leading-8 text-stone-300 sm:text-lg">
-                    {profile.intro}
-                  </p>
-                </div>
+        <section id="home" className="hero-stage relative scroll-mt-24">
+          <div className="section-shell relative z-10 grid min-h-[calc(100svh-76px)] items-center gap-10 py-14 sm:py-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.72fr)] lg:py-20">
+            <div>
+              <Reveal variant="left" className="max-w-4xl space-y-7">
+                <p className="hero-kicker">{profile.title} / {profile.location}</p>
+                <h1 className="hero-title font-semibold text-white" aria-label={profile.tagline}>
+                  <TypewriterTagline key={profile.tagline} text={profile.tagline} animate />
+                </h1>
+                <p className="hero-copy text-base leading-8 sm:text-lg">{profile.intro}</p>
 
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <LinkButton href="#projects" icon="arrow">
@@ -549,64 +522,55 @@ function App() {
                     Open resume
                   </LinkButton>
                 </div>
-
-                <div className="grid gap-4 sm:grid-cols-3">
-                  {stats.map((item, index) => (
-                    <Reveal
-                      variant="zoom"
-                      key={item.label}
-                      delay={index * 90}
-                      className="panel interactive-lift p-5 text-left"
-                    >
-                      <p className="text-3xl font-semibold tracking-[-0.05em] text-white">
-                        {item.value}
-                      </p>
-                      <p className="mt-2 text-sm text-stone-300">{item.label}</p>
-                    </Reveal>
-                  ))}
-                </div>
               </Reveal>
 
-              <Reveal variant="right" delay={140} className="mx-auto w-full max-w-md">
-                <div className="panel relative overflow-hidden p-3">
-                  <div className="absolute inset-x-6 top-6 h-24 rounded-full bg-cyan-300/12 blur-3xl" />
-                  <img
-                    src={profile.profileImage}
-                    alt={`${profile.name} profile photo`}
-                    className="relative h-[26rem] w-full rounded-[24px] border border-white/10 object-cover object-[center_18%] sm:h-[31rem] sm:object-[center_14%]"
-                  />
-                </div>
-              </Reveal>
+              <div className="mt-10 grid gap-3 sm:grid-cols-3">
+                {stats.map((item, index) => (
+                  <Reveal
+                    variant="zoom"
+                    key={item.label}
+                    delay={index * 90}
+                    className="hero-metric interactive-lift rounded-lg p-5 text-left"
+                  >
+                    <p className="relative text-3xl font-semibold text-white">{item.value}</p>
+                    <p className="relative mt-2 text-sm text-stone-300">{item.label}</p>
+                  </Reveal>
+                ))}
+              </div>
             </div>
 
-            <Reveal variant="tilt" delay={220} className="mt-10 panel interactive-tilt p-6 sm:p-8">
-              <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-                <div>
-                  <p className="text-sm uppercase tracking-[0.24em] text-cyan-100/75">
-                    Quick snapshot
-                  </p>
-                  <p className="mt-4 text-lg leading-8 text-stone-200">{profile.availability}</p>
+            <Reveal variant="right" delay={120} className="hero-portrait-wrap">
+              <div className="hero-portrait panel interactive-tilt">
+                <img
+                  src={profile.profileImage}
+                  alt={`${profile.name} profile photo`}
+                />
+                <div className="hero-portrait-caption">
+                  <p className="text-xs uppercase tracking-[0.18em] text-teal-100/75">Available for</p>
+                  <p className="mt-1 text-sm text-white">Internships / software roles</p>
                 </div>
-                <div className="grid gap-3 text-sm text-stone-300 sm:grid-cols-2">
-                  <div className="rounded-2xl border border-white/8 bg-black/10 px-4 py-4">
-                    <p className="text-xs uppercase tracking-[0.24em] text-cyan-100/75">
-                      Base
-                    </p>
-                    <p className="mt-2 text-base text-white">{profile.location}</p>
-                  </div>
-                  <div className="rounded-2xl border border-white/8 bg-black/10 px-4 py-4">
-                    <p className="text-xs uppercase tracking-[0.24em] text-cyan-100/75">
-                      Focus
-                    </p>
-                    <p className="mt-2 text-base text-white">Full Stack applications</p>
-                  </div>
+              </div>
+            </Reveal>
+
+            <Reveal variant="up" delay={240} className="lg:col-span-2">
+              <div className="grid gap-3 text-sm text-stone-300 sm:grid-cols-[1fr_auto_auto] sm:items-center">
+                <p className="border-l border-teal-300/35 pl-4 text-base leading-7 text-stone-200">
+                  {profile.availability}
+                </p>
+                <div className="rounded-lg border border-white/10 bg-white/6 px-4 py-3 backdrop-blur-md">
+                  <p className="text-xs uppercase tracking-[0.18em] text-teal-100/75">Base</p>
+                  <p className="mt-1 text-white">{profile.location}</p>
+                </div>
+                <div className="rounded-lg border border-white/10 bg-white/6 px-4 py-3 backdrop-blur-md">
+                  <p className="text-xs uppercase tracking-[0.18em] text-amber-100/75">Focus</p>
+                  <p className="mt-1 text-white">Full Stack applications</p>
                 </div>
               </div>
             </Reveal>
           </div>
         </section>
 
-                <section id="about" className="scroll-mt-24">
+        <section id="about" className="section-band scroll-mt-24">
           <div className="section-shell py-12 sm:py-16">
             <Reveal variant="fade">
               <SectionIntro
@@ -616,7 +580,7 @@ function App() {
               />
             </Reveal>
 
-            <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+            <div className="mt-10 grid gap-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
               <Reveal variant="left" className="panel interactive-lift h-fit self-start p-7 sm:p-8">
                 <p className="section-copy">
                   I&apos;m a Full-Stack Software Developer based in Singapore, currently pursuing
@@ -640,14 +604,14 @@ function App() {
                 delay={120}
                 className="panel interactive-lift h-fit self-start p-7 sm:p-8"
               >
-                <p className="text-sm uppercase tracking-[0.24em] text-cyan-100/75">
+                <p className="text-sm uppercase tracking-[0.18em] text-teal-100/75">
                   Current focus
                 </p>
-                <div className="mt-5 space-y-4">
+                <div className="mt-5 grid gap-3">
                   {focusAreas.map((item) => (
                     <div
                       key={item}
-                      className="flex gap-3 rounded-2xl border border-white/8 bg-black/10 px-4 py-4"
+                      className="flex gap-3 rounded-lg border border-white/8 bg-black/10 px-4 py-4 transition hover:border-teal-300/25 hover:bg-teal-300/8"
                     >
                       <div className="focus-dot" />
                       <p className="text-sm leading-7 text-stone-300">{item}</p>
@@ -659,13 +623,13 @@ function App() {
           </div>
         </section>
 
-        <section id="skills" className="scroll-mt-24">
+        <section id="skills" className="section-band scroll-mt-24">
           <div className="section-shell py-12 sm:py-16">
             <Reveal variant="fade">
               <SectionIntro
                 eyebrow="Skills"
-                title="Technical strenghts that I was able to gain and adapt"
-                copy="Tools, technologies, and workflows I use to design, build, and deliver complete software projects."
+                title="Technical strengths I can apply quickly."
+                copy="A focused toolkit for building secure APIs, responsive frontends, and practical full-stack products."
               />
             </Reveal>
 
@@ -677,12 +641,17 @@ function App() {
                   delay={index * 70}
                   className="panel interactive-lift p-6"
                 >
-                  <p className="text-lg font-medium text-white">{group.category}</p>
+                  <div className="flex items-center justify-between gap-4">
+                    <p className="text-lg font-medium text-white">{group.category}</p>
+                    <span className="soft-index text-xs tracking-[0.18em]">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
                   <div className="mt-5 flex flex-wrap gap-2">
                     {group.items.map((item) => (
                       <span
                         key={item}
-                        className="skill-chip rounded-full border border-white/10 bg-black/10 px-3 py-2 text-sm text-stone-200"
+                        className="skill-chip rounded-md border border-white/10 bg-black/10 px-3 py-2 text-sm text-stone-200"
                       >
                         {item}
                       </span>
@@ -694,13 +663,13 @@ function App() {
           </div>
         </section>
 
-        <section id="projects" className="scroll-mt-24">
+        <section id="projects" className="section-band scroll-mt-24">
           <div className="section-shell py-12 sm:py-16">
             <Reveal variant="fade">
               <SectionIntro
                 eyebrow="Featured Projects"
-                title="Includes both personal and school projects"
-                copy="Here are all the featured projects I have done during my course of study in Singapore Polytechnic as well as during free time. Feel free to click on the links to learn more about them!"
+                title="Projects that show how I think and build."
+                copy="Each project highlights product thinking, implementation choices, and the impact behind the work."
               />
             </Reveal>
 
@@ -710,31 +679,30 @@ function App() {
                   variant={project.highlight ? 'tilt' : 'right'}
                   key={project.title}
                   delay={index * 110}
-                  className={`panel interactive-tilt overflow-hidden ${project.highlight ? 'lg:col-span-2' : ''}`}
+                  className={`project-card panel interactive-tilt overflow-hidden ${project.highlight ? 'lg:col-span-2' : ''}`}
                 >
                   <div
-                    className={`grid gap-0 ${project.highlight ? 'lg:grid-cols-[0.98fr_1.02fr]' : ''}`}
+                    className={`grid gap-0 ${project.highlight ? 'lg:grid-cols-[minmax(0,0.95fr)_minmax(0,0.9fr)]' : ''}`}
                   >
-                    <div className="min-h-full border-b border-white/8 bg-black/10 lg:border-r lg:border-b-0 lg:border-white/8">
+                    <div className="project-image border-b border-white/8 bg-black/10 lg:border-r lg:border-b-0 lg:border-white/8">
                       <img
                         src={project.image}
                         alt={`${project.title} preview`}
-                        className="h-full w-full object-cover"
                       />
                     </div>
-                    <div className="p-6 sm:p-8">
+                    <div className="project-content p-6 sm:p-8">
                       <div className="flex flex-wrap items-center gap-3">
                         {project.highlight && (
-                          <span className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-xs uppercase tracking-[0.24em] text-cyan-100">
+                          <span className="rounded-md border border-teal-300/20 bg-teal-300/10 px-3 py-1 text-xs uppercase tracking-[0.18em] text-teal-100">
                             Featured
                           </span>
                         )}
-                        <p className="text-xs uppercase tracking-[0.24em] text-stone-400">
-                          Project spotlight
+                        <p className="soft-index text-xs uppercase tracking-[0.18em]">
+                          Project {String(index + 1).padStart(2, '0')}
                         </p>
                       </div>
 
-                      <h3 className="mt-5 text-2xl font-semibold tracking-[-0.04em] text-white">
+                      <h3 className="project-title mt-5 text-2xl font-semibold tracking-normal text-white">
                         {project.title}
                       </h3>
                       <p className="mt-4 text-sm leading-7 text-stone-300 sm:text-base">
@@ -748,7 +716,7 @@ function App() {
                         {project.stack.map((item) => (
                           <span
                             key={item}
-                            className="rounded-full border border-white/10 px-3 py-1.5 text-sm text-stone-200"
+                            className="rounded-md border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-stone-200"
                           >
                             {item}
                           </span>
@@ -762,7 +730,7 @@ function App() {
                             href={link.url}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/6 px-4 py-2.5 text-sm text-stone-100 transition hover:border-cyan-300/30 hover:bg-cyan-300/10"
+                            className="inline-flex items-center gap-2 rounded-md border border-white/12 bg-white/6 px-4 py-2.5 text-sm text-stone-100 transition hover:border-teal-300/30 hover:bg-teal-300/10"
                           >
                             <span>{link.label}</span>
                             <Icon name="arrow" className="h-4 w-4" />
@@ -777,7 +745,7 @@ function App() {
           </div>
         </section>
 
-        <section id="journey" className="scroll-mt-24">
+        <section id="journey" className="section-band scroll-mt-24">
           <div className="section-shell py-12 sm:py-16">
             <Reveal variant="fade">
               <SectionIntro
@@ -810,7 +778,7 @@ function App() {
 
                     <div className="journey-card panel interactive-lift p-6 sm:p-7">
                       <div className="flex items-start justify-between gap-3 md:hidden">
-                        <p className="text-xs uppercase tracking-[0.24em] text-cyan-100/75">
+                        <p className="text-xs uppercase tracking-[0.18em] text-teal-100/75">
                           {entry.date}
                         </p>
                         {isCurrent ? <span className="journey-status-pill">Current</span> : null}
@@ -845,13 +813,13 @@ function App() {
           </div>
         </section>
 
-        <section id="activities" className="scroll-mt-24">
+        <section id="activities" className="section-band scroll-mt-24">
           <div className="section-shell py-12 sm:py-16">
             <Reveal variant="fade">
               <SectionIntro
                 eyebrow="Activities"
                 title="Leadership, teamwork, and initiative beyond technical tasks."
-               
+                copy="Co-curricular involvement that shows communication, ownership, and the ability to contribute beyond code."
               />
             </Reveal>
 
@@ -877,13 +845,13 @@ function App() {
           </div>
         </section>
 
-        <section id="other-activities" className="scroll-mt-24">
+        <section id="other-activities" className="section-band scroll-mt-24">
           <div className="section-shell py-12 sm:py-16">
             <Reveal variant="fade">
               <SectionIntro
                 eyebrow="Other Co-Curriculars"
                 title="Featured activities I participated in."
-            
+                copy="A gallery-backed record of events, hackathons, and school involvement that add context to my growth."
               />
             </Reveal>
 
@@ -924,7 +892,7 @@ function App() {
             onClick={() => setActiveOtherPhoto(null)}
           >
             <div
-              className={`w-full max-w-5xl rounded-3xl p-4 sm:p-6 ${
+              className={`w-full max-w-5xl rounded-xl p-4 sm:p-6 ${
                 theme === 'light'
                   ? 'border border-slate-900/15 bg-white/95 text-slate-900'
                   : 'border border-white/15 bg-[#08101d] text-stone-100'
@@ -938,7 +906,7 @@ function App() {
                   </p>
                   {activeOtherPhoto.date && (
                     <p className={`mt-1 text-xs uppercase tracking-[0.18em] ${
-                      theme === 'light' ? 'text-cyan-800/80' : 'text-cyan-100/75'
+                      theme === 'light' ? 'text-teal-800/80' : 'text-teal-100/75'
                     }`}>
                       {activeOtherPhoto.date}
                     </p>
@@ -949,8 +917,8 @@ function App() {
                   onClick={() => setActiveOtherPhoto(null)}
                   className={`rounded-full px-4 py-2 text-xs font-medium uppercase tracking-[0.18em] transition ${
                     theme === 'light'
-                      ? 'border border-slate-900/18 bg-slate-100 text-slate-800 hover:border-cyan-700/40 hover:bg-cyan-100'
-                      : 'border border-white/20 bg-white/6 text-stone-100 hover:border-cyan-300/40 hover:bg-cyan-300/15'
+                      ? 'border border-slate-900/18 bg-slate-100 text-slate-800 hover:border-teal-700/40 hover:bg-teal-100'
+                      : 'border border-white/20 bg-white/6 text-stone-100 hover:border-teal-300/40 hover:bg-teal-300/15'
                   }`}
                 >
                   Close
@@ -958,7 +926,7 @@ function App() {
               </div>
 
               <div
-                className={`rounded-2xl p-3 ${
+                className={`rounded-lg p-3 ${
                   theme === 'light'
                     ? 'border border-slate-900/12 bg-slate-100/80'
                     : 'border border-white/10 bg-black/35'
@@ -967,24 +935,24 @@ function App() {
                 <img
                   src={activeOtherPhoto.src}
                   alt={activeOtherPhoto.alt}
-                  className="max-h-[70vh] w-full rounded-xl object-contain"
+                  className="max-h-[70vh] w-full rounded-md object-contain"
                 />
               </div>
             </div>
           </div>
         )}
 
-        <section id="contact" className="scroll-mt-24">
+        <section id="contact" className="section-band scroll-mt-24">
           <div className="section-shell py-12 sm:py-16 lg:pb-24">
-            <Reveal variant="tilt" className="panel interactive-tilt overflow-hidden p-7 sm:p-10">
+            <Reveal variant="tilt" className="contact-panel panel interactive-tilt overflow-hidden p-7 sm:p-10">
               <div className="grid gap-8 lg:grid-cols-[1fr_0.95fr] lg:items-start">
                 <div>
                   <span className="label-pill">Contact</span>
-                  <h2 className="mt-6 max-w-xl text-3xl font-semibold tracking-[-0.05em] text-white sm:text-5xl">
-                    Always open to discussing new oppurtunities, collaborations, or just connecting with like-minded individuals.
+                  <h2 className="mt-6 max-w-xl text-3xl font-semibold tracking-normal text-white sm:text-5xl">
+                    Always open to discussing new opportunities, collaborations, or just connecting with like-minded individuals.
                   </h2>
                   <p className="mt-5 max-w-2xl text-base leading-8 text-stone-300">
-                    Whether or not you have a project in mind, an internship oppurtunity, or simply want a chat about development, feel free to reach out - Lets connect !
+                    Whether or not you have a project in mind, an internship opportunity, or simply want a chat about development, feel free to reach out. Let&apos;s connect.
                   </p>
                 </div>
 
@@ -995,9 +963,9 @@ function App() {
                       href={contact.url}
                       target={contact.url.startsWith('http') ? '_blank' : undefined}
                       rel={contact.url.startsWith('http') ? 'noreferrer' : undefined}
-                      className="grid min-h-[86px] grid-cols-[auto_1fr_auto] items-center gap-4 rounded-[22px] border border-white/10 bg-black/10 px-5 py-4 transition hover:border-cyan-300/25 hover:bg-cyan-300/8"
+                      className="grid min-h-[86px] grid-cols-[auto_1fr_auto] items-center gap-4 rounded-lg border border-white/10 bg-black/10 px-5 py-4 transition hover:border-teal-300/25 hover:bg-teal-300/8"
                     >
-                      <div className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-cyan-100">
+                      <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-teal-100">
                         <Icon name={iconByContact[contact.label]} />
                       </div>
                       <div className="min-w-0">
