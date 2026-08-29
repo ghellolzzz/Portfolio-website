@@ -4,12 +4,18 @@ export const portfolioData = {
     title: 'Software Developer',
     tagline:
       'I build clean, scalable web applications with a focus on user experience, performance, and real-world impact.',
+    rotatingTaglines: [
+      'clean, scalable web apps',
+      'user-focused experiences',
+      'secure full-stack products',
+      'performance-driven interfaces',
+    ],
     intro:
       'I am a software-focused student and builder who enjoys turning ideas into responsive, production-ready web applications. I have hands-on experience building full-stack systems with secure backend architecture, clean APIs, and intuitive frontends.',
     location: 'Based in Singapore',
     availability:
       'Actively seeking internships and opportunities to contribute, learn, and grow in real-world development teams',
-    profileImage: '/images/profile.jpeg',
+    profileImage: '/images/profile.jpg',
     resumeUrl: '/resume.pdf',
   },
   stats: [

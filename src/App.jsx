@@ -1,5 +1,13 @@
 import { useEffect, useState } from 'react'
+import { AnimatePresence, MotionConfig, motion as Motion, useReducedMotion, useScroll, useSpring } from 'motion/react'
+import RotatingText from './components/RotatingText'
+import Lanyard from './components/Lanyard/Lanyard'
+import { ShaderBackground } from '@/components/ui/neuro-noise'
 import Reveal from './components/Reveal'
+import ParallaxSection from './components/ParallaxSection'
+import SkillsKeypad from './components/SkillsKeypad'
+import WelcomeScreen, { IntroContext } from './components/WelcomeScreen'
+import { ParallaxEngine } from './components/Parallax'
 import { portfolioData } from './data/portfolio'
 
 function SectionIntro({ eyebrow, title, copy }) {
@@ -126,26 +134,6 @@ function Icon({ name, className = 'h-5 w-5' }) {
         fill="currentColor"
       />
     ),
-    sun: (
-      <>
-        <circle cx="12" cy="12" r="4.2" stroke="currentColor" strokeWidth="1.7" />
-        <path
-          d="M12 2.8v2.4M12 18.8v2.4M21.2 12h-2.4M5.2 12H2.8M18.7 5.3l-1.7 1.7M7 17l-1.7 1.7M18.7 18.7 17 17M7 7 5.3 5.3"
-          stroke="currentColor"
-          strokeWidth="1.7"
-          strokeLinecap="round"
-        />
-      </>
-    ),
-    moon: (
-      <path
-        d="M14.9 3.5a8.6 8.6 0 1 0 5.6 13.8 7.6 7.6 0 1 1-5.6-13.8Z"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    ),
   }
 
   return (
@@ -163,53 +151,36 @@ function LinkButton({ href, icon, children, secondary = false }) {
     : 'cta-button-primary border border-teal-300/30 bg-teal-300/14 text-teal-50 hover:border-teal-200/50 hover:bg-teal-300/20'
 
   return (
-    <a
+    <Motion.a
       href={href}
       target={href.startsWith('http') ? '_blank' : undefined}
       rel={href.startsWith('http') ? 'noreferrer' : undefined}
       className={`${baseClass} ${variantClass}`}
+      whileHover={{ y: -2 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: 'spring', stiffness: 420, damping: 26 }}
     >
       <Icon name={icon} className="h-4 w-4" />
       <span>{children}</span>
-    </a>
+    </Motion.a>
   )
 }
 
-function TypewriterTagline({ text, animate }) {
-  const [typedText, setTypedText] = useState('')
+function ScrollProgress() {
+  const { scrollYProgress } = useScroll()
+  const shouldReduceMotion = useReducedMotion()
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 170,
+    damping: 28,
+    mass: 0.35,
+  })
 
-  useEffect(() => {
-    if (!animate) {
-      return undefined
-    }
-
-    let index = 0
-    const typewriter = setInterval(() => {
-      index += 1
-      setTypedText(text.slice(0, index))
-
-      if (index >= text.length) {
-        clearInterval(typewriter)
-      }
-    }, 35)
-
-    return () => clearInterval(typewriter)
-  }, [animate, text])
-
-  if (!animate) {
-    return text
-  }
-
-  const showCaret = typedText.length < text.length
   return (
-    <>
-      {typedText}
-      {showCaret && (
-        <span className="typewriter-caret" aria-hidden="true">
-          |
-        </span>
-      )}
-    </>
+    <Motion.div
+      className="scroll-progress"
+      style={{ scaleX: shouldReduceMotion ? scrollYProgress : scaleX }}
+      aria-hidden="true"
+    />
   )
 }
 
@@ -218,7 +189,12 @@ function ActivityCard({ activity, isOpen, onToggle, onImageOpen }) {
   const gallery = activity.gallery ?? []
 
   return (
-    <div className="panel interactive-lift p-6">
+    <Motion.article
+      layout
+      className="panel p-6"
+      whileHover={{ y: -4 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 24 }}
+    >
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-xs uppercase tracking-[0.18em] text-teal-100/75">{activity.role}</p>
@@ -228,18 +204,19 @@ function ActivityCard({ activity, isOpen, onToggle, onImageOpen }) {
           </p>
         </div>
 
-        <button
+        <Motion.button
           type="button"
           onClick={onToggle}
           className="inline-flex items-center gap-2 rounded-md border border-white/12 bg-white/6 px-4 py-2 text-xs font-medium uppercase tracking-[0.18em] text-teal-100 transition hover:border-teal-300/35 hover:bg-teal-300/12"
           aria-expanded={isOpen}
+          whileTap={{ scale: 0.97 }}
         >
           {isOpen ? 'Collapse' : 'Expand'}
           <Icon
             name="arrow"
             className={`h-4 w-4 transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`}
           />
-        </button>
+        </Motion.button>
       </div>
 
       <p className="mt-4 text-sm leading-7 text-stone-300">{activity.description}</p>
@@ -295,7 +272,7 @@ function ActivityCard({ activity, isOpen, onToggle, onImageOpen }) {
           )}
         </div>
       </div>
-    </div>
+    </Motion.article>
   )
 }
 
@@ -303,7 +280,12 @@ function OtherActivityCard({ item, isOpen, onToggle, onImageOpen }) {
   const gallery = item.gallery ?? []
 
   return (
-    <div className="panel interactive-lift p-6">
+    <Motion.article
+      layout
+      className="panel p-6"
+      whileHover={{ y: -4 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 24 }}
+    >
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-xs uppercase tracking-[0.18em] text-teal-100/75">{item.role}</p>
@@ -311,18 +293,19 @@ function OtherActivityCard({ item, isOpen, onToggle, onImageOpen }) {
           <p className="mt-2 text-sm text-stone-400">{item.period}</p>
         </div>
 
-        <button
+        <Motion.button
           type="button"
           onClick={onToggle}
           className="inline-flex items-center gap-2 rounded-md border border-white/12 bg-white/6 px-4 py-2 text-xs font-medium uppercase tracking-[0.18em] text-teal-100 transition hover:border-teal-300/35 hover:bg-teal-300/12"
           aria-expanded={isOpen}
+          whileTap={{ scale: 0.97 }}
         >
           {isOpen ? 'Hide Gallery' : 'Open Gallery'}
           <Icon
             name="arrow"
             className={`h-4 w-4 transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`}
           />
-        </button>
+        </Motion.button>
       </div>
 
       <p className="mt-4 text-sm leading-7 text-stone-300">{item.description}</p>
@@ -374,23 +357,16 @@ function OtherActivityCard({ item, isOpen, onToggle, onImageOpen }) {
           )}
         </div>
       </div>
-    </div>
+    </Motion.article>
   )
 }
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [hasEntered, setHasEntered] = useState(false)
   const [expandedActivity, setExpandedActivity] = useState(-1)
   const [expandedOtherActivity, setExpandedOtherActivity] = useState(-1)
   const [activeOtherPhoto, setActiveOtherPhoto] = useState(null)
-  const [theme, setTheme] = useState(() => {
-    if (typeof window === 'undefined') {
-      return 'dark'
-    }
-
-    const storedTheme = window.localStorage.getItem('portfolio-theme')
-    return storedTheme === 'light' ? 'light' : 'dark'
-  })
   const {
     activities,
     contacts,
@@ -399,7 +375,6 @@ function App() {
     otherActivities,
     profile,
     projects,
-    skills,
     stats,
     timeline,
   } = portfolioData
@@ -426,21 +401,23 @@ function App() {
     return () => window.removeEventListener('keydown', closeOnEscape)
   }, [activeOtherPhoto])
 
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme)
-    window.localStorage.setItem('portfolio-theme', theme)
-  }, [theme])
-
   return (
-    <div className={`relative overflow-x-hidden bg-transparent ${theme === 'light' ? 'theme-light text-slate-900' : 'text-stone-100'}`}>
-      <div className="site-noise pointer-events-none fixed inset-0 -z-10 opacity-30" />
-      <div className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-screen bg-[linear-gradient(115deg,rgba(20,184,166,0.12),transparent_30%,rgba(245,158,11,0.08)_68%,transparent)]" />
+    <MotionConfig reducedMotion="never">
+      <IntroContext.Provider value={hasEntered}>
+      <WelcomeScreen
+        name={profile.name}
+        title={profile.title}
+        location={profile.location}
+        onComplete={() => setHasEntered(true)}
+      />
+      <div className="neuro-noise-shell" aria-hidden="true">
+        <ShaderBackground className="absolute inset-0 h-full w-full" />
+      </div>
+      <ParallaxEngine />
+      <div className="relative overflow-x-clip bg-transparent text-stone-100">
+        <ScrollProgress />
 
-      <header
-        className={`sticky top-0 z-40 border-b backdrop-blur-xl ${
-          theme === 'light' ? 'border-slate-900/12 bg-slate-100/86' : 'border-white/8 bg-[#05060a]/84'
-        }`}
-      >
+      <header className="sticky top-0 z-40 border-b border-white/8 bg-[#05060a]/84 backdrop-blur-xl">
         <div className="section-shell flex items-center justify-between py-4">
           <a
             href="#home"
@@ -462,56 +439,79 @@ function App() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-stone-100 transition hover:border-cyan-300/30 hover:bg-cyan-300/12"
-              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              <Icon name={theme === 'dark' ? 'sun' : 'moon'} />
-            </button>
-
-            <button
+          <div className="flex items-center gap-2 md:hidden">
+            <Motion.button
               type="button"
               className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-stone-100 md:hidden"
               onClick={() => setIsMenuOpen((open) => !open)}
               aria-expanded={isMenuOpen}
               aria-controls="mobile-menu"
               aria-label="Toggle navigation menu"
+              whileTap={{ scale: 0.92 }}
             >
               <Icon name={isMenuOpen ? 'close' : 'menu'} />
-            </button>
+            </Motion.button>
           </div>
         </div>
 
-        {isMenuOpen && (
-          <div id="mobile-menu" className="border-t border-white/8 md:hidden">
-            <div className="section-shell flex flex-col gap-2 py-4">
-              {navigation.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className="rounded-lg border border-white/8 bg-white/5 px-4 py-3 text-sm text-stone-200 transition hover:bg-white/8"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
+        <AnimatePresence initial={false}>
+          {isMenuOpen && (
+            <Motion.div
+              id="mobile-menu"
+              className="overflow-hidden border-t border-white/8 md:hidden"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="section-shell flex flex-col gap-2 py-4">
+                {navigation.map((item, index) => (
+                  <Motion.a
+                    key={item.href}
+                    href={item.href}
+                    className="rounded-lg border border-white/8 bg-white/5 px-4 py-3 text-sm text-stone-200 transition hover:bg-white/8"
+                    onClick={() => setIsMenuOpen(false)}
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.035, duration: 0.24 }}
+                  >
+                    {item.label}
+                  </Motion.a>
+                ))}
+              </div>
+            </Motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
-      <main>
-        <section id="home" className="hero-stage relative scroll-mt-24">
-          <div className="section-shell relative z-10 grid min-h-[calc(100svh-76px)] items-center gap-10 py-14 sm:py-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.72fr)] lg:py-20">
+      <main className="relative z-10">
+        <ParallaxSection id="home" variant="hero" className="hero-stage relative scroll-mt-24">
+          <div className="section-shell relative z-10 grid min-h-[calc(100svh-var(--header-height))] items-center gap-10 py-14 sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.9fr)] lg:py-20">
             <div>
               <Reveal variant="left" className="max-w-4xl space-y-7">
                 <p className="hero-kicker">{profile.title} / {profile.location}</p>
-                <h1 className="hero-title font-semibold text-white" aria-label={profile.tagline}>
-                  <TypewriterTagline key={profile.tagline} text={profile.tagline} animate />
-                </h1>
+                <h1 className="hero-name font-semibold text-white">{profile.name}</h1>
+                <p className="hero-tagline" aria-label={profile.tagline}>
+                  <span className="hero-tagline-line">
+                    <span>I build </span>
+                    <RotatingText
+                      key={hasEntered ? 'rotating-on' : 'rotating-off'}
+                      texts={profile.rotatingTaglines}
+                      auto={hasEntered}
+                      splitBy="words"
+                      staggerFrom="last"
+                      initial={{ y: '100%' }}
+                      animate={{ y: 0 }}
+                      exit={{ y: '-120%' }}
+                      staggerDuration={0.025}
+                      rotationInterval={2800}
+                      transition={{ type: 'spring', damping: 30, stiffness: 400 }}
+                      mainClassName="hero-rotating-text inline-flex overflow-hidden rounded-lg border border-teal-300/30 bg-teal-300/12 px-2 py-0.5 text-teal-50 sm:px-3 sm:py-1"
+                      splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1"
+                    />
+                  </span>
+                  <span className="hero-tagline-line">with real-world impact.</span>
+                </p>
                 <p className="hero-copy text-base leading-8 sm:text-lg">{profile.intro}</p>
 
                 <div className="flex flex-col gap-3 sm:flex-row">
@@ -526,33 +526,41 @@ function App() {
 
               <div className="mt-10 grid gap-3 sm:grid-cols-3">
                 {stats.map((item, index) => (
-                  <Reveal
-                    variant="zoom"
-                    key={item.label}
-                    delay={index * 90}
-                    className="hero-metric interactive-lift rounded-lg p-5 text-left"
+                <Reveal
+                  variant="zoom"
+                  key={item.label}
+                  delay={index * 90}
+                  className="text-left"
+                >
+                  <Motion.div
+                    className="hero-metric rounded-lg p-5"
+                    whileHover={{ y: -4 }}
+                    transition={{ type: 'spring', stiffness: 280, damping: 24 }}
                   >
                     <p className="relative text-3xl font-semibold text-white">{item.value}</p>
                     <p className="relative mt-2 text-sm text-stone-300">{item.label}</p>
-                  </Reveal>
+                  </Motion.div>
+                </Reveal>
                 ))}
               </div>
             </div>
 
-            <Reveal variant="right" delay={120} className="hero-portrait-wrap">
-              <div className="hero-portrait panel interactive-tilt">
-                <img
-                  src={profile.profileImage}
-                  alt={`${profile.name} profile photo`}
-                />
-                <div className="hero-portrait-caption">
-                  <p className="text-xs uppercase tracking-[0.18em] text-teal-100/75">Available for</p>
-                  <p className="mt-1 text-sm text-white">Internships / software roles</p>
-                </div>
-              </div>
-            </Reveal>
+            <div className="hero-portrait-wrap hero-lanyard">
+              <Lanyard
+                position={[0, 1.2, 21]}
+                gravity={[0, -40, 0]}
+                fov={17}
+                frontImage={profile.profileImage}
+                imageFit="cover"
+                lanyardWidth={0.18}
+                name={profile.name}
+                title={profile.title}
+                location={profile.location}
+              />
 
-            <Reveal variant="up" delay={240} className="lg:col-span-2">
+            </div>
+
+            <Reveal variant="down" delay={240} className="lg:col-span-2">
               <div className="grid gap-3 text-sm text-stone-300 sm:grid-cols-[1fr_auto_auto] sm:items-center">
                 <p className="border-l border-teal-300/35 pl-4 text-base leading-7 text-stone-200">
                   {profile.availability}
@@ -568,11 +576,11 @@ function App() {
               </div>
             </Reveal>
           </div>
-        </section>
+        </ParallaxSection>
 
-        <section id="about" className="section-band scroll-mt-24">
+        <ParallaxSection id="about" variant="about" className="section-band scroll-mt-24">
           <div className="section-shell py-12 sm:py-16">
-            <Reveal variant="fade">
+            <Reveal variant="up">
               <SectionIntro
                 eyebrow="About Me"
                 title="Building practical, secure, and user-focused software."
@@ -621,11 +629,11 @@ function App() {
               </Reveal>
             </div>
           </div>
-        </section>
+        </ParallaxSection>
 
-        <section id="skills" className="section-band scroll-mt-24">
-          <div className="section-shell py-12 sm:py-16">
-            <Reveal variant="fade">
+        <ParallaxSection id="skills" variant="skills" className="skills-section section-band scroll-mt-24">
+          <SkillsKeypad>
+            <Reveal variant="down">
               <SectionIntro
                 eyebrow="Skills"
                 title="Technical strengths I can apply quickly."
@@ -633,39 +641,12 @@ function App() {
               />
             </Reveal>
 
-            <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {skills.map((group, index) => (
-                <Reveal
-                  variant="zoom"
-                  key={group.category}
-                  delay={index * 70}
-                  className="panel interactive-lift p-6"
-                >
-                  <div className="flex items-center justify-between gap-4">
-                    <p className="text-lg font-medium text-white">{group.category}</p>
-                    <span className="soft-index text-xs tracking-[0.18em]">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                  </div>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {group.items.map((item) => (
-                      <span
-                        key={item}
-                        className="skill-chip rounded-md border border-white/10 bg-black/10 px-3 py-2 text-sm text-stone-200"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
+          </SkillsKeypad>
+        </ParallaxSection>
 
-        <section id="projects" className="section-band scroll-mt-24">
+        <ParallaxSection id="projects" variant="projects" className="section-band scroll-mt-24">
           <div className="section-shell py-12 sm:py-16">
-            <Reveal variant="fade">
+            <Reveal variant="left">
               <SectionIntro
                 eyebrow="Featured Projects"
                 title="Projects that show how I think and build."
@@ -676,14 +657,17 @@ function App() {
             <div className="mt-10 grid gap-6 lg:grid-cols-2">
               {projects.map((project, index) => (
                 <Reveal
-                  variant={project.highlight ? 'tilt' : 'right'}
+                  variant={project.highlight ? 'up' : index % 2 === 0 ? 'left' : 'right'}
                   key={project.title}
                   delay={index * 110}
-                  className={`project-card panel interactive-tilt overflow-hidden ${project.highlight ? 'lg:col-span-2' : ''}`}
+                  className={project.highlight ? 'lg:col-span-2' : ''}
                 >
-                  <div
-                    className={`grid gap-0 ${project.highlight ? 'lg:grid-cols-[minmax(0,0.95fr)_minmax(0,0.9fr)]' : ''}`}
+                  <Motion.article
+                    className="project-card panel overflow-hidden"
+                    whileHover={{ y: -5 }}
+                    transition={{ type: 'spring', stiffness: 250, damping: 25 }}
                   >
+                    <div className={`grid gap-0 ${project.highlight ? 'lg:grid-cols-[minmax(0,0.95fr)_minmax(0,0.9fr)]' : ''}`}>
                     <div className="project-image border-b border-white/8 bg-black/10 lg:border-r lg:border-b-0 lg:border-white/8">
                       <img
                         src={project.image}
@@ -738,16 +722,17 @@ function App() {
                         ))}
                       </div>
                     </div>
-                  </div>
+                    </div>
+                  </Motion.article>
                 </Reveal>
               ))}
             </div>
           </div>
-        </section>
+        </ParallaxSection>
 
-        <section id="journey" className="section-band scroll-mt-24">
+        <ParallaxSection id="journey" variant="journey" className="section-band scroll-mt-24">
           <div className="section-shell py-12 sm:py-16">
-            <Reveal variant="fade">
+            <Reveal variant="right">
               <SectionIntro
                 eyebrow="Journey"
                 title="My experiences along the way"
@@ -762,7 +747,7 @@ function App() {
 
                 return (
                   <Reveal
-                    variant="up"
+                    variant={index % 2 === 0 ? 'left' : 'right'}
                     key={`${entry.date}-${entry.title}`}
                     delay={index * 100}
                     className="journey-row"
@@ -811,11 +796,11 @@ function App() {
               })}
             </div>
           </div>
-        </section>
+        </ParallaxSection>
 
-        <section id="activities" className="section-band scroll-mt-24">
+        <ParallaxSection id="activities" variant="activities" className="section-band scroll-mt-24">
           <div className="section-shell py-12 sm:py-16">
-            <Reveal variant="fade">
+            <Reveal variant="up">
               <SectionIntro
                 eyebrow="Activities"
                 title="Leadership, teamwork, and initiative beyond technical tasks."
@@ -826,7 +811,7 @@ function App() {
             <div className="mt-10 grid gap-5 md:grid-cols-2">
               {activities.map((activity, index) => (
                 <Reveal
-                  variant="zoom"
+                  variant={index % 2 === 0 ? 'left' : 'right'}
                   key={activity.title}
                   delay={index * 90}
                   className={activities.length % 2 === 1 && index === activities.length - 1 ? 'md:col-span-2' : ''}
@@ -843,11 +828,11 @@ function App() {
               ))}
             </div>
           </div>
-        </section>
+        </ParallaxSection>
 
-        <section id="other-activities" className="section-band scroll-mt-24">
+        <ParallaxSection id="other-activities" variant="other-activities" className="section-band scroll-mt-24">
           <div className="section-shell py-12 sm:py-16">
-            <Reveal variant="fade">
+            <Reveal variant="down">
               <SectionIntro
                 eyebrow="Other Co-Curriculars"
                 title="Featured activities I participated in."
@@ -858,7 +843,7 @@ function App() {
             <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
               {otherActivities.map((item, index) => (
                 <Reveal
-                  variant="zoom"
+                  variant={index % 3 === 0 ? 'up' : index % 3 === 1 ? 'left' : 'right'}
                   key={`${item.title}-${item.period}`}
                   delay={index * 80}
                   className={
@@ -879,35 +864,36 @@ function App() {
               ))}
             </div>
           </div>
-        </section>
+        </ParallaxSection>
 
-        {activeOtherPhoto && (
-          <div
-            className={`fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm ${
-              theme === 'light' ? 'bg-slate-900/38' : 'bg-black/75'
-            }`}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Full photo viewer"
-            onClick={() => setActiveOtherPhoto(null)}
-          >
-            <div
-              className={`w-full max-w-5xl rounded-xl p-4 sm:p-6 ${
-                theme === 'light'
-                  ? 'border border-slate-900/15 bg-white/95 text-slate-900'
-                  : 'border border-white/15 bg-[#08101d] text-stone-100'
-              }`}
-              onClick={(event) => event.stopPropagation()}
+        <AnimatePresence>
+          {activeOtherPhoto && (
+            <Motion.div
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Full photo viewer"
+              onClick={() => setActiveOtherPhoto(null)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
             >
+              <Motion.div
+                className="w-full max-w-5xl rounded-xl border border-white/15 bg-[#08101d] p-4 text-stone-100 sm:p-6"
+                onClick={(event) => event.stopPropagation()}
+                initial={{ opacity: 0, y: 18, scale: 0.985 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.985 }}
+                transition={{ type: 'spring', stiffness: 280, damping: 28 }}
+              >
               <div className="mb-4 flex items-start justify-between gap-4">
                 <div>
-                  <p className={`text-sm font-medium ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+                  <p className="text-sm font-medium text-white">
                     {activeOtherPhoto.caption}
                   </p>
                   {activeOtherPhoto.date && (
-                    <p className={`mt-1 text-xs uppercase tracking-[0.18em] ${
-                      theme === 'light' ? 'text-teal-800/80' : 'text-teal-100/75'
-                    }`}>
+                    <p className="mt-1 text-xs uppercase tracking-[0.18em] text-teal-100/75">
                       {activeOtherPhoto.date}
                     </p>
                   )}
@@ -915,37 +901,33 @@ function App() {
                 <button
                   type="button"
                   onClick={() => setActiveOtherPhoto(null)}
-                  className={`rounded-full px-4 py-2 text-xs font-medium uppercase tracking-[0.18em] transition ${
-                    theme === 'light'
-                      ? 'border border-slate-900/18 bg-slate-100 text-slate-800 hover:border-teal-700/40 hover:bg-teal-100'
-                      : 'border border-white/20 bg-white/6 text-stone-100 hover:border-teal-300/40 hover:bg-teal-300/15'
-                  }`}
+                  className="rounded-full border border-white/20 bg-white/6 px-4 py-2 text-xs font-medium uppercase tracking-[0.18em] text-stone-100 transition hover:border-teal-300/40 hover:bg-teal-300/15"
                 >
                   Close
                 </button>
               </div>
 
-              <div
-                className={`rounded-lg p-3 ${
-                  theme === 'light'
-                    ? 'border border-slate-900/12 bg-slate-100/80'
-                    : 'border border-white/10 bg-black/35'
-                }`}
-              >
+              <div className="rounded-lg border border-white/10 bg-black/35 p-3">
                 <img
                   src={activeOtherPhoto.src}
                   alt={activeOtherPhoto.alt}
                   className="max-h-[70vh] w-full rounded-md object-contain"
                 />
               </div>
-            </div>
-          </div>
-        )}
+              </Motion.div>
+            </Motion.div>
+          )}
+        </AnimatePresence>
 
-        <section id="contact" className="section-band scroll-mt-24">
+        <ParallaxSection id="contact" variant="contact" className="section-band scroll-mt-24">
           <div className="section-shell py-12 sm:py-16 lg:pb-24">
-            <Reveal variant="tilt" className="contact-panel panel interactive-tilt overflow-hidden p-7 sm:p-10">
-              <div className="grid gap-8 lg:grid-cols-[1fr_0.95fr] lg:items-start">
+            <Reveal variant="up">
+              <Motion.div
+                className="contact-panel panel overflow-hidden p-7 sm:p-10"
+                whileHover={{ y: -4 }}
+                transition={{ type: 'spring', stiffness: 220, damping: 24 }}
+              >
+                <div className="grid gap-8 lg:grid-cols-[1fr_0.95fr] lg:items-start">
                 <div>
                   <span className="label-pill">Contact</span>
                   <h2 className="mt-6 max-w-xl text-3xl font-semibold tracking-normal text-white sm:text-5xl">
@@ -980,20 +962,24 @@ function App() {
                     </a>
                   ))}
                 </div>
-              </div>
+                </div>
+              </Motion.div>
             </Reveal>
           </div>
-        </section>
+        </ParallaxSection>
       </main>
 
-      <footer className="border-t border-white/8 py-6">
+      <footer className="relative z-10 border-t border-white/8 py-6">
         <div className="section-shell text-center text-sm text-stone-400">
           <p>Mee Ghel F. / Mee Ghel / 2026</p>
         </div>
       </footer>
-    </div>
+      </div>
+      </IntroContext.Provider>
+    </MotionConfig>
   )
 }
 
 export default App
+
 
